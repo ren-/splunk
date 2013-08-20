@@ -1,5 +1,5 @@
 {
-    "name": "vsychov/splunk",
+    "name": "gtunes/splunk",
     "type": "library",
     "description": "splunk sdk",
     "keywords": ["splunk"],
