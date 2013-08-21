@@ -536,4 +536,4 @@ provided below.
 
 ### Contact Us
 
-You can reach the Dev Platform team at [devinfo@splunk.com](mailto:devinfo@splunk.com).
+You can reach the Dev Platform team at [devinfo@splunk.com](mailto:devinfo@splunk.com)
