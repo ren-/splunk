@@ -147,7 +147,7 @@ class Splunk_Http
         
         // NOTE: PHP does not perform certificate validation for HTTPS URLs.
         // NOTE: fopen() magically sets the $http_response_header local variable.
-        $bodyStream = fopen($url, 'rb', /*use_include_path=*/FALSE, $fopenContext);
+        $bodyStream = @fopen($url, 'rb', /*use_include_path=*/FALSE, $fopenContext);
         if ($bodyStream === FALSE)
         {
             $errorInfo = error_get_last();
