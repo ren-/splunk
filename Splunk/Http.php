@@ -121,7 +121,7 @@ class Splunk_Http
                 'header' => sprintf('Proxy-Authrozation: Basic %s',
                     base64_encode($this->http_proxy_username . ':' . $this->http_proxy_password)
                 ),
-                'proxy' => $http_proxy_url,
+                'proxy' => $this->http_proxy_url,
                 'follow_location' => 0,     // don't follow HTTP 3xx automatically
                 'max_redirects' => 0,       // [PHP 5.2] don't follow HTTP 3xx automatically
                 'ignore_errors' => TRUE,    // don't throw exceptions on bad status codes
