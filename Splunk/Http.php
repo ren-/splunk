@@ -24,6 +24,23 @@
 class Splunk_Http
 {
     /**
+     * Parameters required to work behind a corporate proxy
+     */
+    private $http_proxy_url;
+    private $http_proxy_username;
+    private $http_proxy_password;
+
+
+    /**
+     * 
+     */
+    public function __construct($http_proxy_url, $http_proxy_username, $http_proxy_password)
+    {
+        $this->http_proxy_url = $http_proxy_url;
+        $this->http_proxy_username = $http_proxy_username;
+        $this->http_proxy_password = $http_proxy_password;
+    }
+    /**
      * @param array $params     (optional) query parameters.
      * @see request()
      */
@@ -101,6 +118,22 @@ class Splunk_Http
                 'method' => strtoupper($method),
                 'header' => $requestHeaderLines,
                 'content' => $requestBody,
+                'header' => sprintf('Proxy-Authrozation: Basic %s',
+                    base64_encode($http_proxy_username . ':' . $http_proxy_password)
+                ),
+                'proxy' => $http_proxy_url,
+                'follow_location' => 0,     // don't follow HTTP 3xx automatically
+                'max_redirects' => 0,       // [PHP 5.2] don't follow HTTP 3xx automatically
+                'ignore_errors' => TRUE,    // don't throw exceptions on bad status codes
+            ),
+            'https' => array(
+                'method' => strtoupper($method),
+                'header' => $requestHeaderLines,
+                'content' => $requestBody,
+                'header' => sprintf('Proxy-Authrozation: Basic %s',
+                    base64_encode($this->http_proxy_username . ':' . $this->http_proxy_password)
+                ),
+                'proxy' => $this->http_proxy_url,
                 'follow_location' => 0,     // don't follow HTTP 3xx automatically
                 'max_redirects' => 0,       // [PHP 5.2] don't follow HTTP 3xx automatically
                 'ignore_errors' => TRUE,    // don't throw exceptions on bad status codes
@@ -157,6 +190,10 @@ class Splunk_Http
             CURLOPT_HEADER => TRUE,
             // disable SSL certificate validation
             CURLOPT_SSL_VERIFYPEER => FALSE,
+            CURLOPT_SSL_VERIFYHOST => FALSE,
+            CURLOPT_PROXY => $this->http_proxy_url,
+            CURLOPT_PROXYUSERPWD => ($this->http_proxy_username . ':' . $this->http_proxy_password),
+            
         );
         
         foreach ($requestHeaders as $k => $v)

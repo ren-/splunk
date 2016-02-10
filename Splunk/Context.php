@@ -59,6 +59,10 @@ class Splunk_Context
      */
     public function __construct($args=array())
     {
+        $http_proxy_url = $args['http_proxy_url'];
+        $http_proxy_username = $args['http_proxy_username'];
+        $http_proxy_password = $args['http_proxy_password'];
+
         $args = array_merge(array(
             'username' => 'admin',
             'password' => 'changeme',
@@ -67,7 +71,7 @@ class Splunk_Context
             'port' => 8089,
             'scheme' => 'https',
             'namespace' => Splunk_Namespace::createDefault(),
-            'http' => new Splunk_Http(),
+            'http' => new Splunk_Http($http_proxy_url, $http_proxy_username, $http_proxy_password),
         ), $args);
         
         $this->username = $args['username'];
