@@ -119,7 +119,7 @@ class Splunk_Http
                 'header' => $requestHeaderLines,
                 'content' => $requestBody,
                 'header' => sprintf('Proxy-Authrozation: Basic %s',
-                    base64_encode($http_proxy_username . ':' . $http_proxy_password)
+                    base64_encode($this->http_proxy_username . ':' . $this->http_proxy_password)
                 ),
                 'proxy' => $http_proxy_url,
                 'follow_location' => 0,     // don't follow HTTP 3xx automatically
@@ -193,7 +193,7 @@ class Splunk_Http
             CURLOPT_SSL_VERIFYHOST => FALSE,
             CURLOPT_PROXY => $this->http_proxy_url,
             CURLOPT_PROXYUSERPWD => ($this->http_proxy_username . ':' . $this->http_proxy_password),
-            
+
         );
         
         foreach ($requestHeaders as $k => $v)
